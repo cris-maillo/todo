@@ -64,18 +64,15 @@ header img{
 }
 
 .todo{
+    margin: 5px;
     display: flex;
     justify-content: space-between;
-    border-style: solid;
-    border-width: 2px 0px 0px 0px;
-    border-color: #000;
-    padding: 10px;
+    background-color: rgb(254, 225, 225);
+    border-radius: 20px;
+    padding: 10px 30px;
     width: 100%;
 }
 
-.todo:last-child{
-    border-width: 2px 0px 2px 0px;
-}
 
 .inputs > button{
     width: fit-content;

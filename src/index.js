@@ -23,6 +23,8 @@ const listContainer = document.getElementById("todos");
 
 var toDoList = [];
 
+console.log("hello")
+
 form.addEventListener('submit', (event) => {
   event.preventDefault();
   let title = form.elements["title"].value
@@ -45,9 +47,23 @@ function displayList(){
       
       let item = document.createElement("div");
       item.className = "todoname";
-      item.id = i;
       item.innerHTML = toDoList[i].title;
-      item.addEventListener("click", toggleComplete());
+
+      // add function to each item
+
+      // check if item is complete
+
+      //
+
+      console.log(toDoList[i].completed)
+
+      let completeStatus = toDoList[i].completed;
+
+      item.addEventListener("click", function() { markComplete(completeStatus, i); } , false)
+
+      if(toDoList[i].completed === true){
+        item.classList = "completed";
+      }
   
       let itemDate = document.createElement("div");
       itemDate.className = "dueDate";
@@ -60,22 +76,23 @@ function displayList(){
     
 }
 
+function markComplete(completeStatus, i) {
+  console.log("status" + completeStatus)
 
-
-function toggleComplete(){
-  // console.log(this.listContainer.childNodes[0].innerHTML)
-  // let i = toDoList.findIndex(toDo => toDo.title === this.parentNode.childNodes[0].innerHTML);
-  //   if(toDoList[i].completed === true){
-  //     toDoList[i].completed = false;
-  //     toDoList[i].classList.remove("completed");
-  //   }
-  //   else{
-  //     toDoList[i].completed = true;
-  //     toDoList[i].classList = "completed";
-  //   }
-  console.log("need to figure this out")
-    
+  if(completeStatus === true){
+    toDoList[i].completed = false;
+    toDoList[i].classList = "todoname";
+  }
+  else{
+    toDoList[i].completed = true;
+    console.log(toDoList[i].completed);
+    console.log(toDoList)
+    toDoList[i].classList = "todoname completed";
+  }
+  displayList()
 }
+
+
 
 
 
