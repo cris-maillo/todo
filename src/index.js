@@ -21,7 +21,10 @@ import {ToDo} from "./newToDo.js";
 const form  = document.getElementById('addform');
 const listContainer = document.getElementById("todos");
 
-var toDoList = [];
+var toDoList = [{title: 'vsdvds', dueDate: '2022-07-21', completed: false}];
+// var toDoList = [{title: "hello", dueDate: "}];
+
+displayList();
 
 console.log("hello")
 
@@ -40,6 +43,8 @@ function displayList(){
     while (listContainer.firstChild) {
       listContainer.removeChild(listContainer.lastChild);
     }
+
+    console.log(toDoList)
     for (let i = 0; i < toDoList.length; i++){
   
       let itemContainer = document.createElement("div");
@@ -49,16 +54,7 @@ function displayList(){
       item.className = "todoname";
       item.innerHTML = toDoList[i].title;
 
-      // add function to each item
-
-      // check if item is complete
-
-      //
-
-      console.log(toDoList[i].completed)
-
       let completeStatus = toDoList[i].completed;
-
       item.addEventListener("click", function() { markComplete(completeStatus, i); } , false)
 
       if(toDoList[i].completed === true){
@@ -68,9 +64,20 @@ function displayList(){
       let itemDate = document.createElement("div");
       itemDate.className = "dueDate";
       itemDate.innerHTML = toDoList[i].dueDate;
+
+      let itemDelete = document.createElement("img");
+      itemDelete.src = "img/trash-can.png";
+      itemDelete.className = "itemDelete";
+      itemDelete.addEventListener("click", function() { deleteItem(i); } , false)
+      itemDelete.width = 25;
+
+      let itemLeft = document.createElement("div");
+      itemLeft.className = "itemLeft";
   
       itemContainer.appendChild(item);
-      itemContainer.appendChild(itemDate);
+      itemLeft.appendChild(itemDate);
+      itemLeft.appendChild(itemDelete);
+      itemContainer.appendChild(itemLeft);
       listContainer.appendChild(itemContainer);
     }
     
@@ -89,6 +96,11 @@ function markComplete(completeStatus, i) {
     console.log(toDoList)
     toDoList[i].classList = "todoname completed";
   }
+  displayList()
+}
+
+function deleteItem(i){
+  toDoList.splice(i, 1);
   displayList()
 }
 
