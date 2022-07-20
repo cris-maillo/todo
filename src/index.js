@@ -19,14 +19,12 @@ import {ToDo} from "./newToDo.js";
 
 
 const form  = document.getElementById('addform');
-const listContainer = document.getElementById("todos");
 
-var toDoList = [{title: 'vsdvds', dueDate: '2022-07-21', completed: false}];
-// var toDoList = [{title: "hello", dueDate: "}];
+var toDoList = [{title: '01hello', dueDate: '2022-07-21', completed: false}, {title: '02hello', dueDate: '2022-07-21', completed: true}, {title: '03hello', dueDate: '2022-07-21', completed: false}];
 
 displayList();
 
-console.log("hello")
+
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -34,67 +32,62 @@ form.addEventListener('submit', (event) => {
   let dueDate = form.elements["dueDate"].value
   var ToDo1 = new ToDo(title, dueDate, false)
   toDoList.push(ToDo1);
-  console.log(toDoList[0].title)
-  console.log(toDoList)
   displayList();
 });
 
 function displayList(){
-    while (listContainer.firstChild) {
-      listContainer.removeChild(listContainer.lastChild);
+  const listContainer = document.getElementById("todos");
+  
+  while (listContainer.firstChild) {
+    listContainer.removeChild(listContainer.lastChild);
+  }
+
+  for (let i = 0; i < toDoList.length; i++){
+    let itemContainer = document.createElement("div");
+    itemContainer.className = "todo";
+    
+    let item = document.createElement("div");
+    item.className = "todoname";
+    item.innerHTML = toDoList[i].title;
+    
+    let completeStatus = toDoList[i].completed;
+    item.addEventListener("click", function() { markComplete(completeStatus, i); } , false)
+
+    if(toDoList[i].completed === true){
+      item.classList = "completed";
     }
 
-    console.log(toDoList)
-    for (let i = 0; i < toDoList.length; i++){
-  
-      let itemContainer = document.createElement("div");
-      itemContainer.className = "todo";
-      
-      let item = document.createElement("div");
-      item.className = "todoname";
-      item.innerHTML = toDoList[i].title;
+    let itemDate = document.createElement("div");
+    itemDate.className = "dueDate";
+    itemDate.innerHTML = toDoList[i].dueDate;
 
-      let completeStatus = toDoList[i].completed;
-      item.addEventListener("click", function() { markComplete(completeStatus, i); } , false)
+    let itemDelete = document.createElement("img");
+    itemDelete.src = "img/trash-can.png";
+    itemDelete.className = "itemDelete";
+    itemDelete.addEventListener("click", function() { deleteItem(i); } , false)
+    itemDelete.width = 25;
 
-      if(toDoList[i].completed === true){
-        item.classList = "completed";
-      }
-  
-      let itemDate = document.createElement("div");
-      itemDate.className = "dueDate";
-      itemDate.innerHTML = toDoList[i].dueDate;
+    let itemLeft = document.createElement("div");
+    itemLeft.className = "itemLeft";
 
-      let itemDelete = document.createElement("img");
-      itemDelete.src = "img/trash-can.png";
-      itemDelete.className = "itemDelete";
-      itemDelete.addEventListener("click", function() { deleteItem(i); } , false)
-      itemDelete.width = 25;
-
-      let itemLeft = document.createElement("div");
-      itemLeft.className = "itemLeft";
-  
-      itemContainer.appendChild(item);
-      itemLeft.appendChild(itemDate);
-      itemLeft.appendChild(itemDelete);
-      itemContainer.appendChild(itemLeft);
-      listContainer.appendChild(itemContainer);
-    }
+    itemContainer.appendChild(item);
+    itemLeft.appendChild(itemDate);
+    itemLeft.appendChild(itemDelete);
+    itemContainer.appendChild(itemLeft);
+    listContainer.appendChild(itemContainer);
+  }
     
 }
 
-function markComplete(completeStatus, i) {
-  console.log("status" + completeStatus)
+function markComplete(completeStatus, i) 
 
   if(completeStatus === true){
     toDoList[i].completed = false;
     toDoList[i].classList = "todoname";
   }
   else{
-    toDoList[i].completed = true;
-    console.log(toDoList[i].completed);
-    console.log(toDoList)
-    toDoList[i].classList = "todoname completed";
+      toDoList[i].completed = true;
+      toDoList[i].classList = "todoname completed";
   }
   displayList()
 }
@@ -103,6 +96,10 @@ function deleteItem(i){
   toDoList.splice(i, 1);
   displayList()
 }
+
+
+// export{i, toDoList}
+// export function deleteItem()
 
 
 
