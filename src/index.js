@@ -17,6 +17,7 @@
 
 import {ToDo} from "./newToDo.js";
 import {markComplete} from "./markComplete.js";
+import {deleteItem} from "./deleteItem.js";
 
 
 const form  = document.getElementById('addform');
@@ -25,18 +26,17 @@ var toDoList = [{title: '01hello', dueDate: '2022-07-21', completed: false}, {ti
 
 displayList();
 
-
-
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  let title = form.elements["title"].value
-  let dueDate = form.elements["dueDate"].value
-  var ToDo1 = new ToDo(title, dueDate, false)
-  toDoList.push(ToDo1);
-  displayList();
-});
-
 function displayList(){
+
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let title = form.elements["title"].value
+    let dueDate = form.elements["dueDate"].value
+    var ToDo1 = new ToDo(title, dueDate, false)
+    toDoList.push(ToDo1);
+    displayList();
+  });
+  
   const listContainer = document.getElementById("todos");
   
   while (listContainer.firstChild) {
@@ -65,7 +65,7 @@ function displayList(){
     let itemDelete = document.createElement("img");
     itemDelete.src = "img/trash-can.png";
     itemDelete.className = "itemDelete";
-    itemDelete.addEventListener("click", function() { deleteItem(i); } , false)
+    itemDelete.addEventListener("click", function() { deleteItem(i, toDoList); } , false)
     itemDelete.width = 25;
 
     let itemLeft = document.createElement("div");
@@ -80,30 +80,7 @@ function displayList(){
     
 }
 
-// function markComplete(completeStatus, i) {
-
-//   if(completeStatus === true){
-//     toDoList[i].completed = false;
-//     toDoList[i].classList = "todoname";
-//   }
-//   else{
-//       toDoList[i].completed = true;
-//       toDoList[i].classList = "todoname completed";
-//   }
-//   displayList()
-// }
-
-function deleteItem(i){
-  toDoList.splice(i, 1);
-  displayList()
-}
-
-
-// export{i, toDoList}
-// export function deleteItem()
-
-
-
+export {displayList}
 
 
 

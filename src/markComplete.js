@@ -1,3 +1,5 @@
+import {displayList} from "./index.js";
+
 const markComplete = (completeStatus, i, toDoList) => {
 
     if(completeStatus === true){
@@ -8,8 +10,6 @@ const markComplete = (completeStatus, i, toDoList) => {
         toDoList[i].completed = true;
         toDoList[i].classList = "todoname completed";
     }
-
-    console.log(toDoList)
     displayList()
 }
 

@@ -1,10 +1,8 @@
-// import {i} from "index.js"
+import {displayList} from "./index.js";
 
-// function deleteItem(i){
-//     console.log(i)
-//     console.log("actually working")
-//     toDoList.splice(i, 1);
-//     displayList();
-// }
+function deleteItem(i, toDoList){
+    toDoList.splice(i, 1);
+    displayList()
+}
 
-// export {toDoList}
+export {deleteItem}
