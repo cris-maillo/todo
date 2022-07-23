@@ -18,13 +18,18 @@
 import {ToDo} from "./newToDo.js";
 import {markComplete} from "./markComplete.js";
 import {deleteItem} from "./deleteItem.js";
+import {createProject} from "./createProject.js";
 
 
 const form  = document.getElementById('addform');
 
 var toDoList = [{title: '01hello', dueDate: '2022-07-21', completed: false}, {title: '02hello', dueDate: '2022-07-21', completed: true}, {title: '03hello', dueDate: '2022-07-21', completed: false}];
+var projects = ["Due Today", "Coding"]
+
+document.getElementById("addProject").addEventListener("click", createProject)
 
 displayList();
+displayProjects();
 
 function displayList(){
 
@@ -36,7 +41,7 @@ function displayList(){
     toDoList.push(ToDo1);
     displayList();
   });
-  
+
   const listContainer = document.getElementById("todos");
   
   while (listContainer.firstChild) {
@@ -78,6 +83,24 @@ function displayList(){
     listContainer.appendChild(itemContainer);
   }
     
+}
+
+function displayProjects(){
+  const projectContainer = document.getElementById("projectlist");
+  while (projectContainer.firstChild) {
+    projectContainer.removeChild(projectContainer.lastChild);
+  }
+  for (let i = 0; i < projects.length; i++){
+    let projectName = document.createElement("h3");
+    projectName.innerHTML = projects[i];
+    projectName.addEventListener("click", function() { switchProject(); } , false)
+    projectContainer.appendChild(projectName);
+  }
+
+}
+
+function switchProject(){
+
 }
 
 export {displayList}
