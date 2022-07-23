@@ -78,6 +78,10 @@ header img{
     cursor: pointer;
 }
 
+.inputs > *{
+    margin: 5px;
+}
+
 
 .inputs > button{
     width: fit-content;
@@ -112,10 +116,8 @@ form{
 
 .completed{
    text-decoration: line-through;
+   cursor: pointer;
 }
 
-/* .inputs{
-
-} */
 
 

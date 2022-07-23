@@ -16,6 +16,7 @@
 // ]
 
 import {ToDo} from "./newToDo.js";
+import {markComplete} from "./markComplete.js";
 
 
 const form  = document.getElementById('addform');
@@ -51,7 +52,7 @@ function displayList(){
     item.innerHTML = toDoList[i].title;
     
     let completeStatus = toDoList[i].completed;
-    item.addEventListener("click", function() { markComplete(completeStatus, i); } , false)
+    item.addEventListener("click", function() { markComplete(completeStatus, i, toDoList); } , false)
 
     if(toDoList[i].completed === true){
       item.classList = "completed";
@@ -79,18 +80,18 @@ function displayList(){
     
 }
 
-function markComplete(completeStatus, i) 
+// function markComplete(completeStatus, i) {
 
-  if(completeStatus === true){
-    toDoList[i].completed = false;
-    toDoList[i].classList = "todoname";
-  }
-  else{
-      toDoList[i].completed = true;
-      toDoList[i].classList = "todoname completed";
-  }
-  displayList()
-}
+//   if(completeStatus === true){
+//     toDoList[i].completed = false;
+//     toDoList[i].classList = "todoname";
+//   }
+//   else{
+//       toDoList[i].completed = true;
+//       toDoList[i].classList = "todoname completed";
+//   }
+//   displayList()
+// }
 
 function deleteItem(i){
   toDoList.splice(i, 1);
