@@ -34,11 +34,12 @@ header img{
     justify-content: space-between;
     gap: 10px;
     cursor: pointer;
+    width: 125px;
 }
 
 .projectHeader img{
-    width: 100%;
     height: 15px;
+    max-width: 15px;
 }
 
 
@@ -108,10 +109,10 @@ button{
     padding: 5px 15px;
     background-color: pink;
     border-radius: 20px;
+    cursor: pointer;
 }
 
 input{
-    padding: 5px;
     border-radius: 20px;
     padding: 5px 15px;
 }
@@ -121,6 +122,11 @@ form{
     flex-direction: column;
     align-items: center;
     gap: 10px;
+}
+
+#projects form{
+    gap: 5px;
+    margin-top: 10px;
 }
 
 .itemLeft{
