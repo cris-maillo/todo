@@ -19,14 +19,26 @@ import {ToDo} from "./newToDo.js";
 import {markComplete} from "./markComplete.js";
 import {deleteItem} from "./deleteItem.js";
 import {createProject} from "./createProject.js";
+import {Project} from "./newProject.js";
 
 
 const form  = document.getElementById('addform');
+const projectForm  = document.getElementById('addprojectform');
 
 var toDoList = [{title: '01hello', dueDate: '2022-07-21', completed: false}, {title: '02hello', dueDate: '2022-07-21', completed: true}, {title: '03hello', dueDate: '2022-07-21', completed: false}];
-var projects = ["Due Today", "Coding"]
+var projects = [{projectName: "Due Today"}, {projectName: "Coding"}]
 
-document.getElementById("addProject").addEventListener("click", createProject)
+projectForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  console.log("hwllo")
+  let projectName = projectForm.elements["project"].value
+  var Project1 = new Project(projectName)
+  projects.push(Project1);
+  console.log(projects)
+  displayProjects();
+});
+
+
 
 displayList();
 displayProjects();
@@ -39,6 +51,7 @@ function displayList(){
     let dueDate = form.elements["dueDate"].value
     var ToDo1 = new ToDo(title, dueDate, false)
     toDoList.push(ToDo1);
+    console.log(toDoList)
     displayList();
   });
 
@@ -86,13 +99,15 @@ function displayList(){
 }
 
 function displayProjects(){
+  
+
   const projectContainer = document.getElementById("projectlist");
   while (projectContainer.firstChild) {
     projectContainer.removeChild(projectContainer.lastChild);
   }
   for (let i = 0; i < projects.length; i++){
     let projectName = document.createElement("h3");
-    projectName.innerHTML = projects[i];
+    projectName.innerHTML = projects[i].projectName;
     projectName.addEventListener("click", function() { switchProject(); } , false)
     projectContainer.appendChild(projectName);
   }
