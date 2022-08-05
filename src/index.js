@@ -25,7 +25,7 @@ import {Project} from "./newProject.js";
 const form  = document.getElementById('addform');
 const projectForm  = document.getElementById('addprojectform');
 
-var toDoList = [{title: '01hello', dueDate: '2022-07-21', completed: false}, {title: '02hello', dueDate: '2022-07-21', completed: true}, {title: '03hello', dueDate: '2022-07-21', completed: false}];
+var toDoList = [{title: '01hello', dueDate: '2022-07-21', completed: false, assignedProject: "Coding"}, {title: '02hello', dueDate: '2022-07-21', completed: true, assignedProject: "Inbox"}, {title: '03hello', dueDate: '2022-07-21', completed: false, assignedProject: "Coding"}];
 var projects = [{projectName: "Due Today"}, {projectName: "Coding"}]
 
 projectForm.addEventListener('submit', (event) => {
@@ -49,7 +49,8 @@ function displayList(){
     event.preventDefault();
     let title = form.elements["title"].value
     let dueDate = form.elements["dueDate"].value
-    var ToDo1 = new ToDo(title, dueDate, false)
+    let assignedProject = projects[1].projectName;
+    var ToDo1 = new ToDo(title, dueDate, false, assignedProject)
     toDoList.push(ToDo1);
     console.log(toDoList)
     displayList();
@@ -108,14 +109,15 @@ function displayProjects(){
   for (let i = 0; i < projects.length; i++){
     let projectName = document.createElement("h3");
     projectName.innerHTML = projects[i].projectName;
-    projectName.addEventListener("click", function() { switchProject(); } , false)
+    let nametest = projects[i].projectName
+    projectName.addEventListener("click", function() { switchProject(nametest); } , false)
     projectContainer.appendChild(projectName);
   }
 
 }
 
-function switchProject(){
-
+function switchProject(nametest){
+  console.log(nametest)
 }
 
 export {displayList}
