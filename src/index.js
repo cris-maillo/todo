@@ -40,20 +40,25 @@ displayProjects();
 
 function displayList(chosenProject){
 
-  console.log(chosenProject)
-
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     let title = form.elements["title"].value
     let dueDate = form.elements["dueDate"].value
-    let assignedProject = projects[1].projectName;
+    let assignedProject = form.elements["project"].value;
     var ToDo1 = new ToDo(title, dueDate, false, assignedProject)
     toDoList.push(ToDo1);
-    console.log(toDoList)
     displayList(chosenProject);
   });
 
   const listContainer = document.getElementById("todos");
+
+  const listHeading = document.getElementById("listHeading");
+  while (listHeading.firstChild) {
+    listHeading.removeChild(listHeading.lastChild);
+  }
+  let projectHeading = document.createElement("h2");
+  projectHeading.innerHTML = chosenProject;
+  listHeading.appendChild(projectHeading);
   
   while (listContainer.firstChild) {
     listContainer.removeChild(listContainer.lastChild);
@@ -70,7 +75,7 @@ function displayList(chosenProject){
       item.innerHTML = toDoList[i].title;
       
       let completeStatus = toDoList[i].completed;
-      item.addEventListener("click", function() { markComplete(completeStatus, i, toDoList); } , false)
+      item.addEventListener("click", function() { markComplete(completeStatus, i, toDoList, chosenProject); } , false)
 
       if(toDoList[i].completed === true){
         item.classList = "completed";
@@ -83,7 +88,7 @@ function displayList(chosenProject){
       let itemDelete = document.createElement("img");
       itemDelete.src = "img/trash-can.png";
       itemDelete.className = "itemDelete";
-      itemDelete.addEventListener("click", function() { deleteItem(i, toDoList); } , false)
+      itemDelete.addEventListener("click", function() { deleteItem(i, toDoList, chosenProject); } , false)
       itemDelete.width = 25;
 
       let itemLeft = document.createElement("div");
@@ -101,24 +106,31 @@ function displayList(chosenProject){
 
 function displayProjects(){
   const projectContainer = document.getElementById("projectlist");
+  const select = document.getElementById("projectSelect");
+
   while (projectContainer.firstChild) {
     projectContainer.removeChild(projectContainer.lastChild);
   }
 
+  while (select.firstChild) {
+    select.removeChild(select.lastChild);
+  }
+
+
   for (let i = 0; i < projects.length; i++){
     let projectName = document.createElement("h3");
     projectName.innerHTML = projects[i];
-    let projectID = projects[i];
-    projectName.addEventListener("click", function() { switchProject(projectID); } , false)
+    let chosenProject = projects[i];
+    projectName.addEventListener("click", function() { displayList(chosenProject); } , false)
     projectContainer.appendChild(projectName);
+
+    var opt = projects[i];
+    var el = document.createElement("option");
+    el.textContent = opt;
+    el.value = opt;
+    select.appendChild(el);
   }
 
-}
-
-function switchProject(projectID){
-  chosenProject = projectID
-  console.log(chosenProject)
-  displayList(chosenProject)
 }
 
 export {displayList}

@@ -1,6 +1,7 @@
 import {displayList} from "./index.js";
 
-const markComplete = (completeStatus, i, toDoList) => {
+
+const markComplete = (completeStatus, i, toDoList, chosenProject) => {
 
     if(completeStatus === true){
         toDoList[i].completed = false;
@@ -10,7 +11,7 @@ const markComplete = (completeStatus, i, toDoList) => {
         toDoList[i].completed = true;
         toDoList[i].classList = "todoname completed";
     }
-    displayList()
+    displayList(chosenProject)
 }
 
 export {markComplete}

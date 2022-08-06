@@ -1,8 +1,8 @@
 import {displayList} from "./index.js";
 
-function deleteItem(i, toDoList){
+function deleteItem(i, toDoList, chosenProject){
     toDoList.splice(i, 1);
-    displayList()
+    displayList(chosenProject)
 }
 
 export {deleteItem}
