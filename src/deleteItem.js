@@ -2,7 +2,7 @@ import {displayList} from "./index.js";
 
 function deleteItem(i, toDoList, chosenProject){
     toDoList.splice(i, 1);
-    displayList(chosenProject)
+    displayList(chosenProject, toDoList)
 }
 
 export {deleteItem}

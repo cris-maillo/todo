@@ -2,7 +2,7 @@ import {displayList} from "./index.js";
 
 
 const markComplete = (completeStatus, i, toDoList, chosenProject) => {
-
+    console.log("he")
     if(completeStatus === true){
         toDoList[i].completed = false;
         toDoList[i].classList = "todoname";
@@ -11,7 +11,7 @@ const markComplete = (completeStatus, i, toDoList, chosenProject) => {
         toDoList[i].completed = true;
         toDoList[i].classList = "todoname completed";
     }
-    displayList(chosenProject)
+    displayList(chosenProject, toDoList)
 }
 
 export {markComplete}

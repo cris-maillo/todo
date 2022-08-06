@@ -1,44 +1,41 @@
-import {isToday, parseISO } from 'date-fns'
-
-// format(new Date(2014, 1, 11), 'yyyy-MM-dd')
-// //=> '2014-02-11'
-
-// const dates = [
-//   new Date(1995, 6, 2),
-//   new Date(1987, 1, 11),
-//   new Date(1989, 6, 10),
-// ]
-// dates.sort(compareAsc)
-//=> [
-//   Wed Feb 11 1987 00:00:00,
-//   Mon Jul 10 1989 00:00:00,
-//   Sun Jul 02 1995 00:00:00
-// ]
-
+import {isToday, parseISO} from 'date-fns'
 import {ToDo} from "./newToDo.js";
 import {markComplete} from "./markComplete.js";
 import {deleteItem} from "./deleteItem.js";
 
-
 const form  = document.getElementById('addform');
 const projectForm  = document.getElementById('addprojectform');
 
-var toDoList = [{title: '01hello', dueDate: '2022-07-21', completed: false, assignedProject: "Coding"}, {title: '02hello', dueDate: '2022-07-21', completed: true, assignedProject: "Inbox"}, {title: '03hello', dueDate: '2022-07-21', completed: false, assignedProject: "Coding"}];
-var projects = ["Inbox", "Due Today", "Coding"]
 
-let chosenProject = projects[0]
 
-projectForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  let projectName = projectForm.elements["project"].value
-  projects.push(projectName);
-  displayProjects();
-});
+(function(){
+  var projects;
+  var toDoList;
 
-displayList(chosenProject);
-displayProjects();
+  if (localStorage.getItem("localProjects") !== null || localStorage.getItem("localDos") !== null) {
+    console.log("local")
+    projects = JSON.parse(localStorage.getItem("localProjects"))
+    toDoList = JSON.parse(localStorage.getItem("localDos"))
+  }
+  else {
+    toDoList = [{title: 'Look Pretty', dueDate: '2022-07-21', completed: false, assignedProject: "Inbox"}, {title: 'Finish To Do App', dueDate: '2022-07-21', completed: false, assignedProject: "Coding"}, {title: 'Have Fun', dueDate: '2022-07-21', completed: false, assignedProject: "Inbox"}];
+    projects = ["Inbox", "Due Today", "Coding"]
+  }
 
-function displayList(chosenProject){
+  projectForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let projectName = projectForm.elements["project"].value
+    projects.push(projectName);
+    displayProjects(projects);
+  });
+
+  let chosenProject = projects[0]
+  displayList(chosenProject, toDoList);
+  displayProjects(projects);
+})();
+
+function displayList(chosenProject, toDoList){
+  localStorage.setItem("localDos", JSON.stringify(toDoList))
 
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -58,11 +55,12 @@ function displayList(chosenProject){
   });
 
   const listContainer = document.getElementById("todos");
-
   const listHeading = document.getElementById("listHeading");
+
   while (listHeading.firstChild) {
     listHeading.removeChild(listHeading.lastChild);
   }
+
   let projectHeading = document.createElement("h2");
   projectHeading.innerHTML = chosenProject;
   listHeading.appendChild(projectHeading);
@@ -71,8 +69,8 @@ function displayList(chosenProject){
     listContainer.removeChild(listContainer.lastChild);
   }
 
-  for (let i = 0; i < toDoList.length; i++){
 
+  for (let i = 0; i < toDoList.length; i++){
     if (toDoList[i].assignedProject == chosenProject){
       let itemContainer = document.createElement("div");
       itemContainer.className = "todo";
@@ -111,7 +109,11 @@ function displayList(chosenProject){
     
 }
 
-function displayProjects(){
+function displayProjects(projects){
+
+  localStorage.setItem("localProjects", JSON.stringify(projects))
+
+
   const projectContainer = document.getElementById("projectlist");
   const select = document.getElementById("projectSelect");
 
@@ -122,7 +124,6 @@ function displayProjects(){
   while (select.firstChild) {
     select.removeChild(select.lastChild);
   }
-
 
   for (let i = 0; i < projects.length; i++){
     let projectName = document.createElement("h1");
