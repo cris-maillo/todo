@@ -1,4 +1,4 @@
-// import { compareAsc, format } from 'date-fns'
+import {isToday, parseISO } from 'date-fns'
 
 // format(new Date(2014, 1, 11), 'yyyy-MM-dd')
 // //=> '2014-02-11'
@@ -44,7 +44,14 @@ function displayList(chosenProject){
     event.preventDefault();
     let title = form.elements["title"].value
     let dueDate = form.elements["dueDate"].value
-    let assignedProject = form.elements["project"].value;
+
+    const result = parseISO(dueDate)
+    let assignedProject;
+    if (isToday(result)){
+      assignedProject = "Due Today";
+    }else{
+      assignedProject = form.elements["project"].value;
+    }
     var ToDo1 = new ToDo(title, dueDate, false, assignedProject)
     toDoList.push(ToDo1);
     displayList(chosenProject);
@@ -118,17 +125,19 @@ function displayProjects(){
 
 
   for (let i = 0; i < projects.length; i++){
-    let projectName = document.createElement("h3");
+    let projectName = document.createElement("h1");
     projectName.innerHTML = projects[i];
     let chosenProject = projects[i];
     projectName.addEventListener("click", function() { displayList(chosenProject); } , false)
     projectContainer.appendChild(projectName);
 
-    var opt = projects[i];
-    var el = document.createElement("option");
-    el.textContent = opt;
-    el.value = opt;
-    select.appendChild(el);
+    if(projects[i] != "Due Today"){
+      var opt = projects[i];
+      var el = document.createElement("option");
+      el.textContent = opt;
+      el.value = opt;
+      select.appendChild(el);
+    }
   }
 
 }
