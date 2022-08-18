@@ -3,78 +3,87 @@ import {ToDo} from "./newToDo.js";
 import {markComplete} from "./markComplete.js";
 import {deleteItem} from "./deleteItem.js";
 
-const form  = document.getElementById('addform');
-const projectForm  = document.getElementById('addprojectform');
-
-var projects;
+// better way or place to declare these?
+var projectList;
 var toDoList;
-let chosenProject;
-
 
 (function(){
+
+  // check IFFE, does it make sense???
+
   if (localStorage.getItem("localProjects") == null || localStorage.getItem("localDos") == null) {
     toDoList = [{title: 'Look Pretty', dueDate: '2022-07-21', completed: false, assignedProject: "Inbox", dueToday: false}, {title: 'Finish To Do App', dueDate: '2022-07-21', completed: false, assignedProject: "Coding", dueToday: false}, {title: 'Have Fun', dueDate: '2022-07-21', completed: false, assignedProject: "Inbox", dueToday: false}];
-    projects = ["Inbox", "Due Today", "Coding"]
+    projectList = ["Inbox", "Due Today", "Coding"]
   }else {
     toDoList = JSON.parse(localStorage.getItem("localDos"))
-    projects = JSON.parse(localStorage.getItem("localProjects"))
+    projectList = JSON.parse(localStorage.getItem("localProjects"))
   }
 
-  chosenProject = projects[0]
+  let activeProject = projectList[0]
+
+  const toDoForm  = document.getElementById('addform');
+  const projectForm  = document.getElementById('addprojectform');
+
+  //would it be better practice if the function for the events were separated? debug issues.
   projectForm.addEventListener('submit', (event) => {
     event.preventDefault();
     let projectName = projectForm.elements["project"].value
-    projects.push(projectName);
-    displayProjects(projects);
+    projectList.push(projectName);
+    displayProjects(projectList);
   });
 
-  form.addEventListener('submit', (event) => {
+  toDoForm.addEventListener('submit', (event) => {
     event.preventDefault();
-    let title = form.elements["title"].value
-    let dueDate = form.elements["dueDate"].value
 
-    const result = parseISO(dueDate)
-    let assignedProject = form.elements["project"].value;
+    //why does it work to declare here inside the function? wouldnt this have to be out
+    let title = toDoForm.elements["title"].value;
+    let dueDate = toDoForm.elements["dueDate"].value;
+
+    let assignedProject = toDoForm.elements["project"].value;
     let dueToday;
-    if (isToday(result)){
+
+    // can I streamline? is it better practice to streamline?
+    const parsedDate = parseISO(dueDate);
+    // better structure for these?
+    if (isToday(parsedDate)){
       dueToday = true;
     }else{
       dueToday = false;
     }
-    var ToDo1 = new ToDo(title, dueDate, false, assignedProject, dueToday)
-    toDoList.push(ToDo1);
-    chosenProject = assignedProject;
-    displayList(chosenProject, toDoList);
 
+    var newToDo = new ToDo(title, dueDate, false, assignedProject, dueToday)
+    toDoList.push(newToDo);
+    activeProject = assignedProject;
+    displayList(activeProject, toDoList);
   });
-  displayList(chosenProject, toDoList);
-  displayProjects(projects);
+
+  displayList(activeProject, toDoList);
+  displayProjects(projectList);
+
 })();
 
-function displayList(chosenProject, toDoList){
+function displayList(activeProject, toDoList){
   localStorage.setItem("localDos", JSON.stringify(toDoList))
 
-  console.log(localStorage.getItem("localDos"))
-
-
-  const listContainer = document.getElementById("todos");
   const listHeading = document.getElementById("listHeading");
-
-  while (listHeading.firstChild) {
-    listHeading.removeChild(listHeading.lastChild);
-  }
+  // check this? is there a better way to remove only child?
+  listHeading.removeChild(listHeading.lastChild);
 
   let projectHeading = document.createElement("h2");
-  projectHeading.innerHTML = chosenProject;
+  projectHeading.innerHTML = activeProject;
+  // better way than appending??
   listHeading.appendChild(projectHeading);
   
+  const listContainer = document.getElementById("todos");
   while (listContainer.firstChild) {
     listContainer.removeChild(listContainer.lastChild);
   }
 
   
   for (let i = 0; i < toDoList.length; i++){
-    if ((chosenProject == "Inbox" || toDoList[i].assignedProject == chosenProject) || (chosenProject == "Due Today" && toDoList[i].dueToday == true)){
+    // is this long if statement okay? would I have to call a separate function?
+    if ((activeProject == "Inbox" || toDoList[i].assignedProject == activeProject) || (activeProject == "Due Today" && toDoList[i].dueToday == true)){
+      
       let itemContainer = document.createElement("div");
       itemContainer.className = "todo";
       
@@ -83,7 +92,7 @@ function displayList(chosenProject, toDoList){
       item.innerHTML = toDoList[i].title;
       
       let completeStatus = toDoList[i].completed;
-      item.addEventListener("click", function() { markComplete(completeStatus, i, toDoList, chosenProject); } , false)
+      item.addEventListener("click", function() { markComplete(completeStatus, i, toDoList, activeProject); } , false)
   
       if(toDoList[i].completed === true){
         item.classList = "completed";
@@ -96,7 +105,9 @@ function displayList(chosenProject, toDoList){
       let itemDelete = document.createElement("img");
       itemDelete.src = "img/trash-can.png";
       itemDelete.className = "itemDelete";
-      itemDelete.addEventListener("click", function() { deleteItem(i, toDoList, chosenProject); } , false)
+
+      //why did I add false to the end of the event listener
+      itemDelete.addEventListener("click", function() { deleteItem(i, toDoList, activeProject); } , false)
       itemDelete.width = 25;
   
       let itemLeft = document.createElement("div");
@@ -111,33 +122,32 @@ function displayList(chosenProject, toDoList){
   }
 }
 
-function displayProjects(projects){
-  localStorage.setItem("localProjects", JSON.stringify(projects))
+function displayProjects(projectList){
+  localStorage.setItem("localProjects", JSON.stringify(projectList))
 
   const projectContainer = document.getElementById("projectlist");
-  const select = document.getElementById("projectSelect");
+  const projectDropdown = document.getElementById("projectSelect");
 
   while (projectContainer.firstChild) {
     projectContainer.removeChild(projectContainer.lastChild);
   }
 
-  while (select.firstChild) {
-    select.removeChild(select.lastChild);
+  while (projectDropdown.firstChild) {
+    projectDropdown.removeChild(projectDropdown.lastChild);
   }
 
-  for (let i = 0; i < projects.length; i++){
+  for (let i = 0; i < projectList.length; i++){
     let projectName = document.createElement("h1");
-    projectName.innerHTML = projects[i];
-    let chosenProject = projects[i];
-    projectName.addEventListener("click", function() { displayList(chosenProject, toDoList); } , false)
+    projectName.innerHTML = projectList[i];
+    let activeProject = projectList[i];
+    projectName.addEventListener("click", function() { displayList(activeProject, toDoList); } , false)
     projectContainer.appendChild(projectName);
 
-    if(projects[i] != "Due Today"){
-      var opt = projects[i];
-      var el = document.createElement("option");
-      el.textContent = opt;
-      el.value = opt;
-      select.appendChild(el);
+    if(projectList[i] != "Due Today"){
+      var dropdownOption = document.createElement("option");
+      dropdownOption.textContent = projectList[i];
+      dropdownOption.value = projectList[i];
+      projectDropdown.appendChild(dropdownOption);
     }
   }
 
