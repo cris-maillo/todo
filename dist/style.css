@@ -1,149 +1,145 @@
-*{
-    padding: 0;
-    margin: 0;
-    border: 0;
-    font-family: Arial, Helvetica, sans-serif;
-
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 body {
-	line-height: 1;
-    background-color: rgb(253, 242, 242);
+  line-height: 1;
+  background-color: rgb(253, 242, 242);
 }
 
-ol, ul {
-	list-style: none;
+ol,
+ul {
+  list-style: none;
 }
 
-header{
-    background-color: rgb(253, 202, 202);
-    display: flex;
-    padding: 10px 0px 10px 40px;
-    gap: 20px;
-    align-items: center;
-    color: white;
+header {
+  background-color: rgb(253, 202, 202);
+  display: flex;
+  padding: 10px 0px 10px 40px;
+  gap: 20px;
+  align-items: center;
+  color: white;
 }
 
-header img{
-    width: 50px;
+header img {
+  width: 50px;
 }
 
-.projectHeader{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    cursor: pointer;
-    width: 125px;
+.projectHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  width: 125px;
 }
 
-.projectHeader img{
-    height: 15px;
-    max-width: 15px;
+.projectHeader img {
+  height: 15px;
+  max-width: 15px;
 }
 
-
-.maincontent{
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr;
-    min-height: 100vh;
+.maincontent {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr;
+  min-height: 100vh;
 }
 
-.sidebar{
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
-    background-color: rgb(254, 225, 225);
+.sidebar {
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  background-color: rgb(254, 225, 225);
 }
 
-#projectlist > *{
-    padding-top: 15px;
-    padding-left: 10px;
-    font-weight: bold;
-    font-size: 15px;
-    cursor: pointer;
+#projectlist > * {
+  padding-top: 15px;
+  padding-left: 10px;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
 }
 
-.list{
-    padding: 50px;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.list {
+  padding: 50px;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-
-#todos{
-    padding: 20px;
-    width: 100%;
+#todos {
+  padding: 20px;
+  width: 100%;
 }
 
-.todo{
-    margin: 5px;
-    display: flex;
-    justify-content: space-between;
-    background-color: rgb(254, 225, 225);
-    border-radius: 20px;
-    padding: 10px 30px;
-    width: 100%;
-    align-items: center;
+.todo {
+  margin: 5px;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgb(254, 225, 225);
+  border-radius: 20px;
+  padding: 10px 30px;
+  width: 100%;
+  align-items: center;
 }
 
-.todoname, .itemDelete{
-    cursor: pointer;
+.todoname,
+.itemDelete {
+  cursor: pointer;
 }
 
-.inputs > *{
-    margin: 5px;
+.inputs > * {
+  margin: 5px;
 }
 
-
-.inputs > button{
-    width: fit-content;
+.inputs > button {
+  width: fit-content;
 }
 
-button{
-    font-size: 15px;
-    padding: 5px 15px;
-    background-color: pink;
-    border-radius: 20px;
-    cursor: pointer;
+button {
+  font-size: 15px;
+  padding: 5px 15px;
+  background-color: pink;
+  border-radius: 20px;
+  cursor: pointer;
 }
 
-input, select{
-    border-radius: 20px;
-    padding: 5px 15px;
+input,
+select {
+  border-radius: 20px;
+  padding: 5px 15px;
 }
 
-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
-::placeholder{
-    color: black;
+::placeholder {
+  color: black;
 }
 
-#projects form{
-    gap: 5px;
-    margin-top: 10px;
+#projects form {
+  gap: 5px;
+  margin-top: 10px;
 }
 
-.itemLeft{
-    align-items: center;
-    justify-items: center;
-    display: flex;
-    gap: 10px;
+.itemLeft {
+  align-items: center;
+  justify-items: center;
+  display: flex;
+  gap: 10px;
 }
 
-.completed{
-   text-decoration: line-through;
-   cursor: pointer;
+.completed {
+  text-decoration: line-through;
+  cursor: pointer;
 }
-
-
-

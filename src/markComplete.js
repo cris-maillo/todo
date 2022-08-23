@@ -1,6 +1,6 @@
-import {displayList} from "./index.js";
+import {displayList} from "./displayList.js";
 
-
+// why am I calling chosenProject
 const markComplete = (completeStatus, i, toDoList, chosenProject) => {
     console.log("he")
     if(completeStatus === true){
