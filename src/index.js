@@ -1,20 +1,18 @@
 import { isToday, parseISO } from "date-fns";
-import { ToDo } from "./newToDo.js";
+import { ToDo } from "./ToDo.js";
 import { displayList } from "./displayList.js";
 import { displayProjects } from "./displayProject.js";
 
-// better way or place to declare these?
-var projectList;
-var toDoList;
+let projectList;
+let toDoList;
 
+// expand IIFE into a named function
 (function () {
-  // check IFFE, does using one make sense???
-  //should some of these functions be separated?
-  
   if (
-    localStorage.getItem("localProjects") == null ||
-    localStorage.getItem("localDos") == null
+    !localStorage.getItem("localProjects") ||
+    !localStorage.getItem("localDos")
   ) {
+    // can use a module as an import for mock data
     toDoList = [
       {
         title: "Look Pretty",
@@ -44,44 +42,49 @@ var toDoList;
     projectList = JSON.parse(localStorage.getItem("localProjects"));
   }
 
+  //if can delete projects, this should be redone 
+  // add in an error to show you can handle edge cases
   let activeProject = projectList[0];
 
+  //review naming convention for IDs
   const toDoForm = document.getElementById("addform");
   const projectForm = document.getElementById("addprojectform");
 
-  //would it be better practice if the function for the events were separated? debug issues.
+  //would it be better practice if the function for the events were separated?
+  //change event listener into button, would avoid using prevent Deafult
   projectForm.addEventListener("submit", (event) => {
     event.preventDefault();
     let projectName = projectForm.elements["project"].value;
+    // create addProject, argument string name project and separate
     projectList.push(projectName);
+    
     displayProjects(projectList, toDoList);
   });
 
   toDoForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
-    //why does it work to declare here inside the function? wouldnt this have to be out
     let title = toDoForm.elements["title"].value;
     let dueDate = toDoForm.elements["dueDate"].value;
-
     let assignedProject = toDoForm.elements["project"].value;
-    let dueToday;
 
-    // can I streamline? is it better practice to streamline?
     const parsedDate = parseISO(dueDate);
-    // better structure for these?
-    if (isToday(parsedDate)) {
-      dueToday = true;
-    } else {
-      dueToday = false;
-    }
+    let dueToday = isToday(parsedDate);
 
-    var newToDo = new ToDo(title, dueDate, false, assignedProject, dueToday);
+    // dueToday if it is tomorrow will not work, should review
+    var newToDo = new ToDo(title, dueDate, assignedProject, dueToday);
     toDoList.push(newToDo);
+
+    // this could also be a class in conjunction with the line before, consider a toDoList class
+    localStorage.setItem("localDos", JSON.stringify(toDoList));
+
+    // add a comment explaining what this does
+    // consider cerating a function for this, as they always go together
     activeProject = assignedProject;
     displayList(activeProject, toDoList);
   });
 
   displayList(activeProject, toDoList);
   displayProjects(projectList, toDoList);
+
 })();

@@ -1,8 +1,6 @@
 import {displayList} from "./displayList.js";
 
-// why am I calling chosenProject
 const markComplete = (completeStatus, i, toDoList, chosenProject) => {
-    console.log("he")
     if(completeStatus === true){
         toDoList[i].completed = false;
         toDoList[i].classList = "todoname";
