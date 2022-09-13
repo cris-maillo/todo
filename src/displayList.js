@@ -22,9 +22,9 @@ function displayList(activeProject, toDoList) {
     // });
 
     for (let i = 0; i < toDoList.length; i++) {
-      // is this long if statement okay? would I have to call a separate function?
-      // options: create a function with a switch; 
+
       if (
+         // optional: this could be transformed into a switch functino
         activeProject == "Inbox" ||
         activeProject == toDoList[i].assignedProject  ||
         (activeProject == "Due Today" && toDoList[i].dueToday == true)

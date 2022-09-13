@@ -1,5 +1,3 @@
-//change file name to tido
-
 class ToDo{
     constructor(title, dueDate,  assignedProject, dueToday){
         this.title = title;

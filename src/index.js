@@ -2,6 +2,7 @@ import { isToday, parseISO } from "date-fns";
 import { ToDo } from "./ToDo.js";
 import { displayList } from "./displayList.js";
 import { displayProjects } from "./displayProject.js";
+import jsonToDoList from '../dist/toDoList.json' assert {type: 'json'};
 
 let projectList;
 let toDoList;
@@ -12,30 +13,7 @@ let toDoList;
     !localStorage.getItem("localProjects") ||
     !localStorage.getItem("localDos")
   ) {
-    // can use a module as an import for mock data
-    toDoList = [
-      {
-        title: "Look Pretty",
-        dueDate: "2022-07-21",
-        completed: false,
-        assignedProject: "Inbox",
-        dueToday: false,
-      },
-      {
-        title: "Finish To Do App",
-        dueDate: "2022-07-21",
-        completed: false,
-        assignedProject: "Coding",
-        dueToday: false,
-      },
-      {
-        title: "Have Fun",
-        dueDate: "2022-07-21",
-        completed: false,
-        assignedProject: "Inbox",
-        dueToday: false,
-      },
-    ];
+    toDoList = jsonToDoList;
     projectList = ["Inbox", "Due Today", "Coding"];
   } else {
     toDoList = JSON.parse(localStorage.getItem("localDos"));
@@ -75,11 +53,10 @@ let toDoList;
     var newToDo = new ToDo(title, dueDate, assignedProject, dueToday);
     toDoList.push(newToDo);
 
-    // this could also be a class in conjunction with the line before, consider a toDoList class
     localStorage.setItem("localDos", JSON.stringify(toDoList));
 
-    // add a comment explaining what this does
-    // consider cerating a function for this, as they always go together
+    // sets the window to display the Project to do list of the last to do created
+    // consider creting a function for this, as they always go together
     activeProject = assignedProject;
     displayList(activeProject, toDoList);
   });

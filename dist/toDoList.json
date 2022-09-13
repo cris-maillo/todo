@@ -1,0 +1,21 @@
+[{
+    "title": "Make lunch",
+    "dueDate": "2022-07-21",
+    "completed": false,
+    "assignedProject": "Inbox",
+    "dueToday": false
+},
+    {
+    "title": "Finish To Do App",
+    "dueDate": "2022-07-21",
+    "completed": false,
+    "assignedProject": "Coding",
+    "dueToday": false
+},
+    {
+    "title": "Have Fun",
+    "dueDate": "2022-07-21",
+    "completed": false,
+    "assignedProject": "Inbox",
+    "dueToday": false
+}]
